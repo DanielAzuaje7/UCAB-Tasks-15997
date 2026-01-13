@@ -22,19 +22,16 @@ export class FileNotesRepository implements INotesRepository {
         return nuevaNota;
     }
 
-    // Cambiado de mostrarTodos a mostrarTodo para cumplir con tu Interfaz
     async mostrarTodo(): Promise<Note[]> {
         const notas = await this.leerArchivo();
         return notas.map(({ contenido, ...resto }) => resto as Note);
     }
 
-    // Agregado | undefined para que TS no se queje si no la encuentra
     async mostrarUno(id: string): Promise<Note | undefined> {
         const notas = await this.leerArchivo();
         return notas.find(n => n.id === id);
     }
 
-    // Agregado | null y corregido fechaActualizacion
     async actualizar(id: string, datos: Partial<Note>): Promise<Note | null> {
         const notas = await this.leerArchivo();
         const index = notas.findIndex(n => n.id === id);
@@ -42,8 +39,6 @@ export class FileNotesRepository implements INotesRepository {
 
         notas[index].titulo = datos.titulo ?? notas[index].titulo;
         notas[index].contenido = datos.contenido ?? notas[index].contenido;
-        
-        // CORRECCIÓN: Usar el nombre en español que definiste en la Entidad
         notas[index].fechaActualizacion = new Date();
 
         await this.guardarArchivo(notas);
