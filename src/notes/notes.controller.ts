@@ -1,34 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { NotesService } from './notes.service';
-import { CreateNoteDto } from './dto/create-note.dto';
-import { UpdateNoteDto } from './dto/update-note.dto';
+import { Note } from './entities/note.entity';
 
 @Controller('notes')
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Post()
-  create(@Body() createNoteDto: CreateNoteDto) {
-    return this.notesService.create(createNoteDto);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() data: Partial<Note>) {
+    return await this.notesService.create(data);
   }
 
   @Get()
-  findAll() {
-    return this.notesService.findAll();
+  async findAll() {
+    return await this.notesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.notesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.notesService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
-    return this.notesService.update(+id, updateNoteDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.notesService.remove(+id);
+  @Delete('bulk')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removeMany(@Body('ids') ids: string[]) {
+    return await this.notesService.removeMany(ids);
   }
 }
