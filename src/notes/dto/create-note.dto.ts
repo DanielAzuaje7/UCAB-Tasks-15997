@@ -20,7 +20,7 @@ export class CreateNoteDto {
    * Se requiere que sea texto.
    */
   @ApiProperty({ 
-    example: 'Integrar Swagger y JSDoc hoy mismo', 
+    example: 'Integrar Swagger y JSDoc hoy mismo, o vuelvo a dormir bajo la mata de topocho', 
     description: 'El cuerpo o detalle de la nota' 
   })
   @IsString()

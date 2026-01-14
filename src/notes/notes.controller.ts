@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { Note } from './entities/note.entity';
 import { CreateNoteDto } from './dto/create-note.dto';
+import { UpdateNoteDto } from './dto/update-note.dto'; // <--- Importante
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('notas') 
@@ -46,6 +47,20 @@ export class NotesController {
   @ApiResponse({ status: 404, description: 'Nota no encontrada.' })
   async findOne(@Param('id') id: string) {
     return await this.notesService.findOne(id);
+  }
+
+  /**
+   * Actualiza una nota existente.
+   * @param id Identificador único de la nota.
+   * @param updateNoteDto Datos a actualizar.
+   */
+  @Patch(':id')
+  @ApiOperation({ summary: 'Actualizar una nota existente' })
+  @ApiParam({ name: 'id', description: 'UUID de la nota a actualizar' })
+  @ApiResponse({ status: 200, description: 'Nota actualizada exitosamente.', type: Note })
+  @ApiResponse({ status: 404, description: 'Nota no encontrada.' })
+  async update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
+    return await this.notesService.update(id, updateNoteDto);
   }
 
   /**
