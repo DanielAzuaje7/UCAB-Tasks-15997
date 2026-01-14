@@ -94,6 +94,25 @@ Para verificar el correcto funcionamiento de los servicios y la lógica de negoc
 ```bash
 npm run test
 ```
+
+---
+
+Antes de realizar las pruebas de integración se recomienda ejecutar los siguientes comandos para garantizar compatibilidad entre Jest y el generador de UUID's:
+
+```bash
+npm uninstall uuid
+npm install uuid@8.3.2
+npm install --save-dev @types/uuid
+```
+
+Para las pruebas de integración se debe ejecutar el siguiente comando:
+
+```bash
+npm run test:e2e
+```
+
+(Se ejecutarán pruebas E2E que implicitamente incluyen pruebas de integración)
+
 ---
 
 ## Arquitectura
