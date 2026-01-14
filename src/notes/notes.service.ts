@@ -1,5 +1,4 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-// Fíjate en el "type" aquí abajo:
 import type { INotesRepository } from './interfaces/notes-repository.interface';
 import { Note } from './entities/note.entity';
 

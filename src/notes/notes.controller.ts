@@ -25,7 +25,6 @@ export class NotesController {
 
   /**
    * Obtiene el listado de todas las notas.
-   * Nota: Según el requisito funcional, no devuelve el contenido de la nota.
    * @returns Lista de notas.
    */
   @Get()
